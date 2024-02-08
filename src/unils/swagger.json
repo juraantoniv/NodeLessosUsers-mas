@@ -328,6 +328,67 @@
         }
       }
     },
+    "/users/update": {
+      "patch": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Update user",
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Access user's  token ",
+            "required": true,
+            "name": "accessToken",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "description": "Update user",
+            "required": true,
+            "name": "User properties",
+            "schema": {
+              "properties": {
+                "avatar":{
+                  "type": "string"
+                },
+                "age":{
+                  "type": "string"
+                },
+                "name":{
+                  "type": "string"
+                },
+                "city":{
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Users was updated",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "avatar":{
+                  "type": "string"
+                },
+                "age":{
+                  "type": "string"
+                },
+                "name":{
+                  "type": "string"
+                },
+                "city":{
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/cars": {
       "get": {
         "tags": ["Cars"],
