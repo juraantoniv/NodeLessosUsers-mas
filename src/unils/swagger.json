@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Your API",
-    "description": "API documentation for your application"
+    "title": "Cars API",
+    "description": "API documentation for cars api"
   },
   "tags": [
     { "name": "Cars", "description": "Cars and CORS operations " },
