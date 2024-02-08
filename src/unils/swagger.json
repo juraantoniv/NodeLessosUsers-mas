@@ -1,0 +1,770 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Your API",
+    "description": "API documentation for your application"
+  },
+  "tags": [
+    { "name": "Cars", "description": "Cars and CORS operations " },
+    { "name": "Authentication", "description": "Operations related to user authentication" },
+    { "name": "Admin", "description": "Operations related to admin " }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Login",
+        "parameters": [
+          {
+            "name": "email and password",
+            "in": "body",
+            "description": "User's email and password",
+            "required": true,
+            "schema": {
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get tokens",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/TokenResponse"
+            }
+          }
+        }
+      }
+
+    },
+    "/auth/register": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Register user",
+        "parameters": [
+          {
+            "in": "body",
+            "description": "register",
+            "required": true,
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/createUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User created",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/user"
+            }
+          }
+        }
+      }
+
+    },
+    "/auth/sellerRegister": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Register user",
+        "parameters": [
+          {
+            "in": "header",
+            "description": "register seller",
+            "required": true,
+            "name": "adminToken",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "description": "register seller",
+            "required": true,
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/createUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User created",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/user"
+            }
+          }
+        }
+      }
+
+    },
+    "/auth/managerRegister": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Register manager",
+        "parameters": [
+          {
+            "in": "header",
+            "description": "register manager",
+            "required": true,
+            "name": "adminToken",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "description": "register manager",
+            "required": true,
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/createUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User created",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/user"
+            }
+          }
+        }
+      }
+
+    },
+    "/auth/me": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "Info about user",
+        "parameters": [
+          {
+            "in": "header",
+            "description": "register",
+            "required": true,
+            "name": "Authorization",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User info",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/user"
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Logout",
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Logout user",
+            "required": true,
+            "name": "Authorization",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logout succeed"
+          }
+        }
+      }
+    },
+    "/auth/changePassword": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Change user's  password",
+        "parameters": [
+          {
+            "in": "body",
+            "description": "Change user's  password",
+            "required": true,
+            "name": "Authorization",
+            "schema": {
+              "properties": {
+                "old_password":{
+                "type": "string"
+                },
+                "password":{
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Password was changed"
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Get refresh token",
+        "parameters": [
+          {
+            "in": "header",
+            "description": "refresh token",
+            "required": true,
+            "name": "Refresh",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User info",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/TokenResponse"
+            }
+          }
+        }
+      }
+    },
+    "/auth/confirmPassword": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Confirm password",
+        "parameters": [
+          {
+            "in": "body",
+            "description": "Active token",
+            "required": true,
+            "name": "token",
+            "schema": {
+              "properties": {
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Password was activated"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Get all",
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Get all users",
+            "required": true,
+            "name": "token",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/user"
+            },
+            "description": "Get all users"
+          }
+        }
+      }
+    },
+    "/users/delete": {
+      "delete": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Delete user",
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Delete user",
+            "required": true,
+            "name": "adminToken",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "description": "Delete user",
+            "required": true,
+            "name": "id",
+            "schema": {
+              "properties": {
+                "id":{
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Users was deleted"
+          }
+        }
+      }
+    },
+    "/cars": {
+      "get": {
+        "tags": ["Cars"],
+        "summary": "Get all cars",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "get current page",
+            "required": false,
+            "type": "number",
+            "default": 1
+          },
+          {
+            "name": "currency",
+            "in": "query",
+            "description": "set currency ",
+            "required": false,
+            "type": "string",
+            "enum": ["UAH", "EUR", "USD"]
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "set limit per page ",
+            "required": false,
+            "type": "string",
+            "default": 5
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Car"
+              }
+            }
+          }
+        }
+      }
+
+    },
+    "/cars/create": {
+      "post": {
+        "tags": ["Cars"],
+        "summary": "Post a car",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "identify your rights",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "image",
+            "in": "formData",
+            "description": "image of car",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "name": "description",
+            "in": "body",
+            "description": "tell about you car ",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "type_currency",
+            "in": "query",
+            "description": "set currency ",
+            "required": false,
+            "type": "string",
+            "enum": ["UAH", "EUR", "USD"]
+          },
+          {
+            "name": "currency",
+            "in": "body",
+            "description": "set price of car ",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "model",
+            "in": "body",
+            "description": "brand of car",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Car"
+              }
+            }
+          }
+        }
+      }
+
+    },
+    "/cars/updateCar": {
+      "patch": {
+        "tags": ["Cars"],
+        "summary": "Update a car",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "car id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "image",
+            "in": "formData",
+            "description": "image of car",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "body",
+            "description": "car body",
+            "required": true,
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/update"
+            }
+          }
+
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Car"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/getById/{id}": {
+      "get": {
+        "tags": ["Cars"],
+        "summary": "Get by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "get cars by id",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get a car",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Car"
+            }
+          }
+        }
+      }
+
+    },
+    "/cars/buy": {
+      "post": {
+        "tags": ["Cars"],
+        "summary": "Buy",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "body",
+            "description": "buy a car",
+            "required": true,
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get a car after buy",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Car"
+            }
+          }
+        }
+      }
+
+    },
+    "/cars/getUsersCars": {
+      "get": {
+        "tags": ["Cars"],
+        "summary": "Seller cars",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Get seller cars for sell",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get seller cars",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Car"
+              }
+            }
+          }
+        }
+      }
+
+    },
+    "/cars/delete": {
+      "delete": {
+        "tags": ["Cars"],
+        "summary": "Delete a car",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "body",
+            "description": "Delete a car by id ",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete current car",
+            "schema": {
+              "type": "string"
+
+            },
+            "examples": {
+              "application/json": {
+                "info": "Car was deleted"
+              }
+            }
+          }
+        }
+      }
+
+    },
+    "/cars/likes/{id}": {
+      "post": {
+        "tags": ["Cars"],
+        "summary": "Like a car",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Like a car",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get a car",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Car"
+            }
+          }
+        }
+      }
+
+    },
+    "/cars/dislikes/{id}": {
+      "post": {
+        "tags": ["Cars"],
+        "summary": "Dislikes a car",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Dislike a car",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get a car",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Car"
+            }
+          }
+        }
+      }
+
+    }
+  },
+  "definitions": {
+    "update": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "tell about you car ",
+          "type": "string"
+        },
+        "type_currency": {
+          "type": "string",
+          "enum": ["UAH", "EUR", "USD"]
+        },
+        "currency": {
+          "description": "set price of car ",
+          "type": "integer"
+        },
+        "model": {
+          "description": "brand of car",
+          "type": "string"
+        }
+      }
+    },
+    "createUser": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "User name"
+        },
+        "email": {
+          "type": "string",
+          "description": "User email"
+        },
+        "password": {
+          "type": "string",
+          "description": "User password"
+        },
+        "city": {
+          "type": "string",
+          "description": "User city"
+        },
+        "age": {
+          "type": "string",
+          "description": "User age"
+        }
+      }
+    },
+    "user": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "description": "User id"
+        },
+        "name": {
+          "type": "string",
+          "description": "User name"
+        },
+        "email": {
+          "type": "string",
+          "description": "User email"
+        },
+        "password": {
+          "type": "string",
+          "description": "User password"
+        },
+        "city": {
+          "type": "string",
+          "description": "User city"
+        },
+        "age": {
+          "type": "string",
+          "description": "User age"
+        }
+      }
+    },
+    "TokenResponse": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string",
+          "description": "Access token for authentication"
+        },
+        "refreshToken": {
+          "type": "string",
+          "description": "Refresh token for authentication"
+        }
+      }
+    },
+    "Car": {
+      "type": "object",
+      "properties": {
+        "_id":{
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type_currency": {
+          "type": "string",
+          "enum": ["UAH", "EUR", "USD"]
+        },
+        "image": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "boughtBy": {
+          "type": "string"
+        },
+        "likes": {
+          "type": "string"
+        },
+        "views": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
+
+
