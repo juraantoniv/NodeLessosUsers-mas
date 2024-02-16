@@ -6,7 +6,7 @@ Welcome to the documentation for the My Express project. This document provides 
 
 The project follows a structured layout:
 
-my-nestjs-project/
+my-express-project/
 │
 ├── src/
 │ ├── configs/ # Configuration files
