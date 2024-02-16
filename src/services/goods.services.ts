@@ -32,8 +32,6 @@ class UserService {
         Cars.count(searchObject),
       ]);
 
-      console.log(users);
-
       return {
         page: +page,
         limit: +limit,

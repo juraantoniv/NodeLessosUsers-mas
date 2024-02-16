@@ -84,6 +84,9 @@ class GoodsController {
 
     const file = req.files.image as UploadedFile;
 
+    console.log("ok");
+    console.log(accessToken);
+
     try {
       const { userId } = tokenService.checkToken(accessToken, "access");
 

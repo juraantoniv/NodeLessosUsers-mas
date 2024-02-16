@@ -29,10 +29,9 @@ class TokenService {
         case "refresh":
           secret = configs.JWT_REFRESH_SECRET;
           break;
+        default:
+          throw new ApiError("checkToken error", 500);
       }
-
-      console.log(secret);
-
       return jwt.verify(token, secret) as ITokenPayload;
     } catch (e) {
       throw new ApiError("Token not valid!", 401);

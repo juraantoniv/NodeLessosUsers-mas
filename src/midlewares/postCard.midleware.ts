@@ -6,7 +6,7 @@ import { Cars } from "../models/goodsModel";
 import { User } from "../models/User.model";
 import { tokenService } from "../services/tocken.service";
 
-class PostCardMiddleware {
+class PostCarMiddleware {
   public async postCar(req: Request, res: Response, next: NextFunction) {
     try {
       const accessToken = req.get("Authorization");
@@ -29,4 +29,4 @@ class PostCardMiddleware {
   }
 }
 
-export const cardMiddleware = new PostCardMiddleware();
+export const cardMiddleware = new PostCarMiddleware();

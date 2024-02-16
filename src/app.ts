@@ -1,7 +1,9 @@
 import cors from "cors";
 import express, { Request, Response } from "express";
 import fileUpload from "express-fileupload";
+import { createServer } from "http";
 import * as mongoose from "mongoose";
+import { Server } from "socket.io";
 import * as swaggerUi from "swagger-ui-express";
 
 import * as swaggerDocument from "../src/unils/swagger.json";
@@ -19,7 +21,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const PORT = 3004;
 
-app.listen(PORT, () => {
+const server = createServer(app);
+
+const io = new Server(server, { cors: { origin: "*" } });
+
+io.on("connection", (socket) => {
+  console.log(`⚡: ${socket.id} user just connected!`);
+  socket.on("login", ({ data }) => {
+    console.log(data);
+  });
+});
+
+server.listen(PORT, () => {
   mongoose.connect(`${configs.DB_URI}`);
   cronRunner();
   console.log(`Server has successfully started on PORT ${PORT}`);

@@ -11,17 +11,13 @@ import { userMiddlewareForDel } from "../midlewares/userCheckIdMidleware";
 const router = Router();
 
 router.get("", authMiddleware.checkAccessToken, goodsController.getAll);
-router.get(
-  "/getById/:id",
-  authMiddleware.checkAccessToken,
-  goodsController.findById,
-);
+
 router.post("/buy", authMiddleware.checkAccessToken, goodsController.buyGoods);
 router.get("/getUsersCars", buyController.getAllBuId);
 router.post(
   "/create",
   cardMiddleware.postCar,
-  // authMiddlewareForCheck.checkRightsOfUser(ERights.Seller),
+  authMiddlewareForCheck.checkRightsOfUser(ERights.Seller),
   goodsController.Create,
 );
 router.delete(
@@ -34,6 +30,11 @@ router.patch(
   "updateCar/",
   authMiddleware.checkAccessToken,
   goodsController.Update,
+);
+router.get(
+  "/getById/:id",
+  authMiddleware.checkAccessToken,
+  goodsController.findById,
 );
 router.get(
   ":name",
