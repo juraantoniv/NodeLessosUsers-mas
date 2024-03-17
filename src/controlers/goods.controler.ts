@@ -84,9 +84,6 @@ class GoodsController {
 
     const file = req.files.image as UploadedFile;
 
-    console.log("ok");
-    console.log(accessToken);
-
     try {
       const { userId } = tokenService.checkToken(accessToken, "access");
 
@@ -137,7 +134,7 @@ class GoodsController {
       );
       const good = await Cars.findOne({ _id: newGood._id }).lean();
       await Cars.findByIdAndUpdate(newGood.id, { image: filePath, userId });
-      const goods = await goodsPresenter.present({ ...good, image: filePath });
+      const goods = goodsPresenter.present({ ...good, image: filePath });
       return res.status(201).json(goods);
     } catch (e) {
       next(e);
